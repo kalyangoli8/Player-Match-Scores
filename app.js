@@ -3,13 +3,13 @@ const {open} = require('sqlite')
 const sqlite3 = require('sqlite3')
 const path = require('path')
 
-const databasePath = path.join(_dirname, 'cricketMatchDetails.db')
+const databasePath = path.join(__dirname, 'cricketMatchDetails.db')
 
 const app = express()
 
 app.use(express.json())
 
-let database = nUll
+let database = null
 
 const initializeDbAndServer = async () => {
   try {
@@ -64,7 +64,7 @@ app.get('/players/:playerId/', async (request, response) => {
 SELECT
 *
 FROM
-player-_details
+player_details
 WHERE
 player_id = ${playerId};`
   const player = await database.get(getPlayerQuery)
@@ -139,7 +139,7 @@ const getmatchPlayersQuery = `
 SELECT
 player_id AS playerId,
 player_name AS playerName,
-SUM(score) AS totalScore;
+SUM(score) AS totalScore,
 SUM(fours) AS totalFours,
 SUM(sixes) AS totalSixes
 FROM player_match_score
