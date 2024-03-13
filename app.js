@@ -99,43 +99,43 @@ match_id = ${matchId};`
   response.send(convertMatchDetailsDbObjectToResponseObject(matchDetails))
 })
 
-app.get("/players/:playerId/matches/", async (request, response) => {
-const { playerId}  = request.params;
-const getPlayerMatchesQuery =`
+app.get('/players/:playerId/matches/', async (request, response) => {
+  const {playerId} = request.params
+  const getPlayerMatchesQuery = `
 SELECT
 *
 FROM player_match_score
 NATURAL JOIN match_details
 WHERE
-player_id = ${playerId};`;
-const playerMatches = await database.all(getPlayerMatchesQuery);
-response.send(
-playerMatches.map((eachMatch)
-convertMatchDetailsDbObjectToResponseObject(eachMatch)
-)
-);
-});
+player_id = ${playerId};`
+  const playerMatches = await database.all(getPlayerMatchesQuery)
+  response.send(
+    playerMatches.map(eachMatch =>
+      convertMatchDetailsDbObjectToResponseObject(eachMatch),
+    ),
+  )
+})
 
-app.get("/matches/:matchId/players", async (request, response) => {
-const {matchId} =request.params;
-const getMatchPlayersQuery =`
+app.get('/matches/:matchId/players', async (request, response) => {
+  const {matchId} = request.params
+  const getMatchPlayersQuery = `
 SELECT
 *
 FROM player_match_score
 NATURAL JOIN player_details
 WHERE
-match_id = ${matchId};`;
-const playersArray = await database.all(getMatchPlayersQuery);
-response.send(
-playersArray.map((eachPlayer)
-convertPlayerDbObjectToResponse0bject(eachPLayer)
-)
-);
-});
+match_id = ${matchId};`
+  const playersArray = await database.all(getMatchPlayersQuery)
+  response.send(
+    playersArray.map(eachPlayer =>
+      convertPlayerDbObjectToResponse0bject(eachPLayer),
+    ),
+  )
+})
 
-app.get("/players/:playerId/playerScores/", async (request, response) => {
-const {playerId} = request.params;
-const getmatchPlayersQuery = `
+app.get('/players/:playerId/playerScores/', async (request, response) => {
+  const {playerId} = request.params
+  const getmatchPlayersQuery = `
 SELECT
 player_id AS playerId,
 player_name AS playerName,
@@ -145,9 +145,9 @@ SUM(sixes) AS totalSixes
 FROM player_match_score
 NATURAL JOIN player_details
 WHERE
-player_id = ${playerId};`;
-const playersMatchDetails = await database.get(getmatchPlayersQuery),
-response.send(playersMatchDetails);
-});
+player_id = ${playerId};`
+  const playersMatchDetails = await database.get(getmatchPlayersQuery)
+  response.send(playersMatchDetails)
+})
 
-module.exports=app;
+module.exports = app
